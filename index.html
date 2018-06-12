@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <title>Budget Keeper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/stylesheet.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <div id="budgetContainer">
+            <header>
+                <h1>Budget Keeper</h1>
+            </header>
+            <div id="budget" class="categoryContainer">
+                <div id="bills" class="category">
+                    <h2>Bills</h2>
+                    <table class="billsTable">
+                        <tr>
+                            <th>Name</th>
+                            <th>Due Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </table>
+                    <input type="text" class="billInput" placeholder="Name" id="billName">
+                    <input type="text" class="billInput" placeholder="Due date" id="billDate">
+                    <input type="text" class="billInput" placeholder="Amount" id="billAmount">
+                    <button type="submit" class="billInput" onclick="insertBill()">Submit</button>
+                </div>
+                <div id="miscExpense" class="category">
+                    <h2>Misc Expenses</h2>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Due Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </table>
+                    <input type="text" class="catInput" placeholder="Name">
+                    <input type="text" class="catInput" placeholder="Due date">
+                    <input type="text" class="catInput" placeholder="Amount">
+                    <button name="data" type="button"  class="catInput">Submit</button>
+                </div>
+            </div>
+            <div id="btn" class="categoryContainer">
+                <form class="addForm">
+                    <select id="addSelect">
+                        <option value="Bill">Bill</option>
+                        <option value="addMiscExp">Misc expense</option>
+                        <option value="addBudget">Budget</option>
+                        <option value="addBudgetExpense">Budget expense</option>
+                    </select>
+                    <button type="button" onclick="selectOptionAdd()">Add</button>
+                </form>
+                <form class="delForm">
+                    <select>
+                        <option value="delBills">Bill</option>
+                        <option value="delMiscExp">Misc expense</option>
+                        <option value="delBudget">Budget</option>
+                        <option value="delBudgetExp">Budget expense</option>
+                    </select>
+                    <input type="submit" value="Delete">
+                </form>
+                <button type="button" id="calculateBtn">Calculate Expenses</button>
+            </div>
+            <div id="expenses" class="categoryContainer" class="category">
+                <div id="budgetGoals" class="category">
+                    <h2>Budget</h2>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                        </tr>
+                    </table>
+                    <input type="text" class="catInput" placeholder="Name">
+                    <input type="text" class="catInput" placeholder="Amount">
+                    <input type="button" value="Submit" class="catInput">
+                </div>
+                <div id="budgetExpenses" class="category">
+                    <h2>Budget Expenses</h2>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </table>
+                    <input type="text" class="catInput" placeholder="Name">
+                    <input type="text" class="catInput" placeholder="Due date">
+                    <input type="text" class="catInput" placeholder="Amount">
+                    <input type="button" value="Submit" class="catInput">
+                </div>
+            </div>
+            <div class="categoryContainer" id="sumContainer">
+                <div id="summary" class="category">
+                    <h2>Balance</h2>
+                    <table id="balanceTable">
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                        </tr>
+                    </table>
+                    <p>
+                        <strong>Total:</strong>
+                        <span id="totalBal"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="script/script.js"></script>
+</body>
+
+</html>
