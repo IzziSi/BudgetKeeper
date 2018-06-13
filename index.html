@@ -17,7 +17,7 @@
             <div id="budget" class="categoryContainer">
                 <div id="bills" class="category">
                     <h2>Bills</h2>
-                    <table class="billsTable">
+                    <table id="billsTable">
                         <tr>
                             <th>Name</th>
                             <th>Due Date</th>
@@ -28,20 +28,22 @@
                     <input type="text" class="billInput" placeholder="Due date" id="billDate">
                     <input type="text" class="billInput" placeholder="Amount" id="billAmount">
                     <button type="submit" class="billInput" onclick="insertBill()">Submit</button>
+                    <button type="submit" class="billInput" onclick="cancel('billInput')">Cancel</button>
                 </div>
                 <div id="miscExpense" class="category">
                     <h2>Misc Expenses</h2>
-                    <table>
+                    <table id="miscExpenseTable">
                         <tr>
                             <th>Name</th>
                             <th>Due Date</th>
                             <th>Amount</th>
                         </tr>
                     </table>
-                    <input type="text" class="catInput" placeholder="Name">
-                    <input type="text" class="catInput" placeholder="Due date">
-                    <input type="text" class="catInput" placeholder="Amount">
-                    <button name="data" type="button"  class="catInput">Submit</button>
+                    <input type="text" class="miscExpInput" placeholder="Name" id="billName">
+                    <input type="text" class="miscExpInput" placeholder="Due date" id="billDate">
+                    <input type="text" class="miscExpInput" placeholder="Amount" id="billAmount">
+                    <button type="submit" class="miscExpInput" onclick="insertMisc()">Submit</button>
+                    <button type="submit" class="miscExpInput" onclick="cancel()">Cancel</button>
                 </div>
             </div>
             <div id="btn" class="categoryContainer">
@@ -68,7 +70,7 @@
             <div id="expenses" class="categoryContainer" class="category">
                 <div id="budgetGoals" class="category">
                     <h2>Budget</h2>
-                    <table>
+                    <table id="budgetGoalsTable">
                         <tr>
                             <th>Name</th>
                             <th>Amount</th>
@@ -80,7 +82,7 @@
                 </div>
                 <div id="budgetExpenses" class="category">
                     <h2>Budget Expenses</h2>
-                    <table>
+                    <table  id="budgetExpensesTable" >
                         <tr>
                             <th>Name</th>
                             <th>Date</th>
@@ -96,7 +98,7 @@
             <div class="categoryContainer" id="sumContainer">
                 <div id="summary" class="category">
                     <h2>Balance</h2>
-                    <table id="balanceTable">
+                    <table id="summaryTable">
                         <tr>
                             <th>Name</th>
                             <th>Amount</th>

@@ -5,7 +5,8 @@ body {
 
 #budgetContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }
@@ -14,6 +15,7 @@ body {
 #expenses,
 #sumContainer {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 100%;
@@ -60,7 +62,7 @@ tr {
     width: 100%;
 }
 
-.catInput, .billInput {
+.catInput, .billInput, .miscExpInput {
     width: 15%;
     margin: 2px;
     height: 20px;
