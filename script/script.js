@@ -7,7 +7,6 @@ const sum = document.getElementById('summaryTable');
 const misc = document.getElementById('miscExpenseTable');
 const calculateExpenses = document.getElementById('calculateBtn');
 let addSelectOption = addSelect.selectedIndex;
-let calculateBills = document.getElementById('billTotalBal');
 let billsTitleStored = JSON.parse(localStorage.getItem('billsTitleData'));
 let billsDueStored = JSON.parse(localStorage.getItem('billsDueData'));
 let billsAmountStorage = JSON.parse(localStorage.getItem('billsAmountData'));
@@ -39,7 +38,6 @@ function insertBill() {
     billRow++
     hideInput('billName', 'billDate', 'billAmount', 'billInput');
     saveData();
-    location.reload();
 }
 
 function insertMiscExp() {
@@ -50,7 +48,6 @@ function insertMiscExp() {
     miscExpRow++
     hideInput('miscExpName', 'miscExpDate', 'miscExpAmount', 'miscExpInput');
     saveData();
-    /* location.reload(); */
 }
 
 
@@ -111,9 +108,9 @@ function saveData() {
     let billsTitleStorage = [];
     let billsPayStorage = [];
     let billsDueStorage = [];
-    let miscExpTitle = document.querySelectorAll('.miscExpName');
-    let miscExpDate = document.querySelectorAll('.miscExpDate');
-    let miscExpPay = document.querySelectorAll('.miscExpAmount');
+    let miscExpTitle = document.querySelectorAll('.nameMiscExp');
+    let miscExpDate = document.querySelectorAll('.dateMiscExp');
+    let miscExpPay = document.querySelectorAll('.amountMiscExp');
     let miscExpTitleStorage = [];
     let miscExpDateStorage = [];
     let miscExpPayStorage = [];
@@ -129,6 +126,7 @@ function saveData() {
         miscExpTitleStorage.push(miscExpTitle[i].innerText);
         miscExpDateStorage.push(miscExpDate[i].innerText);
         miscExpPayStorage.push(miscExpPay[i].innerText);
+        console.log("saved!");
     }
     localStorage.setItem("billsTitleData", JSON.stringify(billsTitleStorage));
     localStorage.setItem("billsDueData", JSON.stringify(billsDueStorage));
@@ -137,6 +135,8 @@ function saveData() {
     localStorage.setItem('miscExpDateData', JSON.stringify(miscExpDateStorage));
     localStorage.setItem('miscExpPayData', JSON.stringify(miscExpPayStorage));
     billShowTotal();
+    location.reload();
+
 }
 
 function onScreenLoad() {
@@ -165,9 +165,9 @@ function onScreenLoad() {
             cell.innerHTML = miscExpTitleStored[i];
             cell2.innerHTML = miscExpDateStored[i];
             cell3.innerHTML = miscExpPayStored[i];
-            cell1.classList.add('nameOfMiscExp');
+            cell.classList.add('nameMiscExp');
             cell2.classList.add('dateMiscExp');
-            cell3.classList.add('paidMiscExp');
+            cell3.classList.add('amountMiscExp');
         }
     }
 }
@@ -176,9 +176,19 @@ function onScreenLoad() {
 function billShowTotal() {
     if (billsTitleStored !== null) {
         let total = 0;
-        for (i = 0; i < billsAmountStorage.length; i++) {
+        for (let i = 0; i < billsAmountStorage.length; i++) {
             total = total + parseInt(billsAmountStorage[i]);
-            calculateBills.innerHTML = total;
+            document.getElementById('billTotalBal').innerHTML = total;
+        }
+    }
+}
+
+function miscExpShowTotal() {
+    if (miscExpTitleStored !== null) {
+        let total = 0;
+        for (let i = 0; i < miscExpPayStored.length;i++) {
+            total = total + parseInt(miscExpPayStored[i]);
+            document.getElementById('miscExpTotalBal').innerHTML = total;
         }
     }
 }
@@ -187,6 +197,6 @@ function clearData() {
     localStorage.clear();
     location.reload();
 }
-
+miscExpShowTotal()
 billShowTotal();
 onScreenLoad();
