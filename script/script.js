@@ -14,13 +14,10 @@ let billsAmountStorage = JSON.parse(localStorage.getItem('billsAmountData'));
 let miscExpTitleStored= JSON.parse(localStorage.getItem('miscExpTitleData'));
 let miscExpDateStored= JSON.parse(localStorage.getItem('miscExpDateData'));
 let miscExpPayStored= JSON.parse(localStorage.getItem('miscExpPayData'));
-let name, date, amount;
-// Create insertMiscExp
-//create insertBudget
 let billRow = 1;
 let miscExpRow = 1;
-
-
+let name, date, amount;
+//create insertBudget
 function cellInput(tableName, nameItem, dateItem, payItem, rowVar) {
     let row = tableName.insertRow(rowVar);
     var cell = row.insertCell(0);
@@ -114,15 +111,15 @@ function saveData() {
     let billsTitleStorage = [];
     let billsPayStorage = [];
     let billsDueStorage = [];
-    let miscExpTitle = document.getElementById('miscExpName');
-    let miscExpDate = document.getElementById('miscExpDate');
-    let miscExpPay = document.getElementById('miscExpAmount');
+    let miscExpTitle = document.querySelectorAll('.miscExpName');
+    let miscExpDate = document.querySelectorAll('.miscExpDate');
+    let miscExpPay = document.querySelectorAll('.miscExpAmount');
     let miscExpTitleStorage = [];
     let miscExpDateStorage = [];
     let miscExpPayStorage = [];
-  /*   if (billsTitleStored !== null) {
+    if (billsTitleStored !== null) {
         localStorage.clear()
-    } */
+    }
     for (let i = 0; i < billsTitle.length; i++) {
         billsTitleStorage.push(billsTitle[i].innerText);
         billsDueStorage.push(billsDue[i].innerText);
