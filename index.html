@@ -14,45 +14,13 @@
             <header>
                 <h1>Budget Keeper</h1>
             </header>
-            <div id="budget" class="categoryContainer">
-                <div id="bills" class="category">
-                    <h2>Bills</h2>
-                    <table id="billsTable">
-                        <tr>
-                            <th>Name</th>
-                            <th>Due Date</th>
-                            <th>Amount</th>
-                        </tr>
-                    </table>
-                    <input type="text" class="billInput" placeholder="Name" id="billName">
-                    <input type="text" class="billInput" placeholder="Due date" id="billDate">
-                    <input type="text" class="billInput" placeholder="Amount" id="billAmount">
-                    <button type="submit" class="billInput" onclick="insertBill()">Submit</button>
-                    <button type="submit" class="billInput" onclick="cancel('billInput')">Cancel</button>
-                </div>
-                <div id="miscExpense" class="category">
-                    <h2>Misc Expenses</h2>
-                    <table id="miscExpenseTable">
-                        <tr>
-                            <th>Name</th>
-                            <th>Due Date</th>
-                            <th>Amount</th>
-                        </tr>
-                    </table>
-                    <input type="text" class="miscExpInput" placeholder="Name" id="billName">
-                    <input type="text" class="miscExpInput" placeholder="Due date" id="billDate">
-                    <input type="text" class="miscExpInput" placeholder="Amount" id="billAmount">
-                    <button type="submit" class="miscExpInput" onclick="insertMisc()">Submit</button>
-                    <button type="submit" class="miscExpInput" onclick="cancel()">Cancel</button>
-                </div>
-            </div>
             <div id="btn" class="categoryContainer">
                 <form class="addForm">
                     <select id="addSelect">
-                        <option value="Bill">Bill</option>
-                        <option value="addMiscExp">Misc expense</option>
-                        <option value="addBudget">Budget</option>
-                        <option value="addBudgetExpense">Budget expense</option>
+                        <option id="addBill">Bill</option>
+                        <option id="addMiscExp">Misc expense</option>
+                        <option id="addBudget">Budget</option>
+                        <option id="addBudgetExpense">Budget expense</option>
                     </select>
                     <button type="button" onclick="selectOptionAdd()">Add</button>
                 </form>
@@ -66,20 +34,63 @@
                     <input type="submit" value="Delete">
                 </form>
                 <button type="button" id="calculateBtn">Calculate Expenses</button>
+                <button type="button" id="saveData" onclick="saveData()">Save</button>
+                <button type="button" id="clearData" onclick="clearData()">Clear All</button>
             </div>
-            <div id="expenses" class="categoryContainer" class="category">
-                <div id="budgetGoals" class="category">
-                    <h2>Budget</h2>
-                    <table id="budgetGoalsTable">
+            <div id="budget" class="categoryContainer">
+                    <div id="budgetGoals" class="category">
+                            <h2>Budget</h2>
+                            <table id="budgetGoalsTable">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </table>
+                            <input type="text" class="addBudgetInput" placeholder="Name">
+                            <input type="text" class="addBudgetInput"  placeholder="Amount">
+                            <button type="submit" class="addBudgetInput" onclick="insertBudget()">Submit</button>
+                            <button type="submit" class="addBudgetInput" onclick="cancel('addBudgetInput')">Cancel</button>
+                        </div>
+                <div id="bills" class="category">
+                    <h2>Bills</h2>
+                    <table id="billsTable">
                         <tr>
                             <th>Name</th>
+                            <th>Due Date</th>
                             <th>Amount</th>
                         </tr>
                     </table>
-                    <input type="text" class="catInput" placeholder="Name">
-                    <input type="text" class="catInput" placeholder="Amount">
-                    <input type="button" value="Submit" class="catInput">
+                    <p>
+                        <strong>Total:</strong>
+                        <span id="billTotalBal"></span>
+                    </p>
+                    <input type="text" pattern="[A-Za-z]" class="billInput" placeholder="Name" id="billName">
+                    <input type="text" class="billInput" placeholder="Due date" id="billDate">
+                    <input type="text" class="billInput" placeholder="Amount" id="billAmount">
+                    <button type="button" class="billInput" onclick="insertBill()">Submit</button>
+                    <button type="submit" class="billInput" onclick="cancel('billInput')">Cancel</button>
                 </div>
+                <div id="miscExpense" class="category">
+                    <h2>Misc Expenses</h2>
+                    <table id="miscExpenseTable">
+                        <tr>
+                            <th>Name</th>
+                            <th>Due Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </table>
+                    <p>
+                        <strong>Total:</strong>
+                        <span id="totalBal"></span>
+                    </p>
+                    <input type="text" class="miscExpInput" placeholder="Name" id="billName">
+                    <input type="text" class="miscExpInput" placeholder="Due date" id="billDate">
+                    <input type="text" class="miscExpInput" placeholder="Amount" id="billAmount">
+                    <button type="submit" class="miscExpInput" onclick="insertMiscExp()">Submit</button>
+                    <button type="submit" class="miscExpInput" onclick="cancel('miscExpInput')">Cancel</button>
+                </div>
+            </div>
+            <div id="expenses" class="categoryContainer" class="category">
                 <div id="budgetExpenses" class="category">
                     <h2>Budget Expenses</h2>
                     <table  id="budgetExpensesTable" >
@@ -89,10 +100,15 @@
                             <th>Amount</th>
                         </tr>
                     </table>
-                    <input type="text" class="catInput" placeholder="Name">
-                    <input type="text" class="catInput" placeholder="Due date">
-                    <input type="text" class="catInput" placeholder="Amount">
-                    <input type="button" value="Submit" class="catInput">
+                    <p>
+                        <strong>Total:</strong>
+                        <span id="totalBal"></span>
+                    </p>
+                    <input type="text" class="BudgetExpenseInput" placeholder="Name">
+                    <input type="text" class="BudgetExpenseInput" placeholder="Due date">
+                    <input type="text" class="BudgetExpenseInput" placeholder="Amount">
+                    <button type="submit" class="BudgetExpenseInput" onclick="insertBudgetExpense()">Submit</button>
+                    <button type="submit" class="BudgetExpenseInput" onclick="cancel('BudgetExpenseInput')">Cancel</button>
                 </div>
             </div>
             <div class="categoryContainer" id="sumContainer">

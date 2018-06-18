@@ -3,29 +3,10 @@ body {
     font-family: 'Philosopher', sans-serif;
 }
 
-#budgetContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
 
-#budget,
-#expenses,
-#sumContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 100%;
-    min-height: 50vh;
-}
 
 #btn {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     height: 50px;
 }
 
@@ -44,28 +25,23 @@ input {
     padding: 0px;
     background-color: lightsteelblue;
     min-width: 30%;
+    max-width: 800px;
 }
 
-h2 {
-    margin: 2px;
-    padding: 2px;
-}
-
-table {
-    height: 70%;
-    width: 100%;
-}
-
-tr {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.catInput, .billInput, .miscExpInput {
+.catInput, .billInput, .miscExpInput, .addBudgetInput,
+ .BudgetExpenseInput {
     width: 15%;
     margin: 2px;
     height: 20px;
     display: none;
     visibility: hidden;
+}
+
+table {
+    width: 100%;
+}
+tr {
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
 }
