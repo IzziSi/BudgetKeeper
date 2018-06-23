@@ -19,7 +19,7 @@
                     <select id="addSelect">
                         <option id="addBill">Bill</option>
                         <option id="addMiscExp">Misc expense</option>
-                        <option id="addBudget">Budget</option>
+                        <option id="addBudget" selected="selected">Budget</option>
                         <option id="addBudgetExpense">Budget expense</option>
                     </select>
                     <button type="button" onclick="selectOptionAdd()">Add</button>
@@ -28,7 +28,7 @@
                     <select>
                         <option value="delBills">Bill</option>
                         <option value="delMiscExp">Misc expense</option>
-                        <option value="delBudget">Budget</option>
+                        <option value="delBudget" selected="selected">Budget</option>
                         <option value="delBudgetExp">Budget expense</option>
                     </select>
                     <input type="submit" value="Delete">
@@ -81,11 +81,11 @@
                     </table>
                     <p>
                         <strong>Total:</strong>
-                        <span id="totalBal"></span>
+                        <span id="budgetExpTotalBal"></span>
                     </p>
-                    <input type="text" class="BudgetExpenseInput" placeholder="Name">
-                    <input type="text" class="BudgetExpenseInput" placeholder="Due date">
-                    <input type="text" class="BudgetExpenseInput" placeholder="Amount">
+                    <input type="text" class="BudgetExpenseInput" placeholder="Name" id="budgetExpenseName">
+                    <input type="text" class="BudgetExpenseInput" placeholder="Date" id="budgetExpenseDate">
+                    <input type="text" class="BudgetExpenseInput" placeholder="Amount" id="budgetExpenseAmount">
                     <button type="submit" class="BudgetExpenseInput" onclick="insertBudgetExpense()">Submit</button>
                     <button type="submit" class="BudgetExpenseInput" onclick="cancel('BudgetExpenseInput')">Cancel</button>
                 </div>
