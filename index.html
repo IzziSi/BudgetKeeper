@@ -20,7 +20,6 @@
                         <option id="addBill">Bill</option>
                         <option id="addMiscExp">Misc expense</option>
                         <option id="addBudget" selected="selected">Budget</option>
-                        <option id="addBudgetExpense">Budget expense</option>
                     </select>
                     <button type="button" onclick="selectOptionAdd()">Add</button>
                 </form>
@@ -29,11 +28,10 @@
                         <option value="delBills">Bill</option>
                         <option value="delMiscExp">Misc expense</option>
                         <option value="delBudget" selected="selected">Budget</option>
-                        <option value="delBudgetExp">Budget expense</option>
                     </select>
                     <input type="submit" value="Delete">
                 </form>
-                <button type="button" id="calculateBtn">Calculate Expenses</button>
+                <button type="button" id="calculateBtn" onclick="insertBalance()">Calculate Expenses</button>
                 <button type="button" id="saveData" onclick="saveData()">Save</button>
                 <button type="button" id="clearData" onclick="clearData()">Clear All</button>
             </div>
@@ -70,25 +68,6 @@
                     <button type="button" class="billInput" onclick="insertBill()">Submit</button>
                     <button type="submit" class="billInput" onclick="cancel('billInput')">Cancel</button>
                 </div>
-                <div id="budgetExpenses" class="category">
-                    <h2>Budget Expenses</h2>
-                    <table  id="budgetExpensesTable" >
-                        <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                        </tr>
-                    </table>
-                    <p>
-                        <strong>Total:</strong>
-                        <span id="budgetExpTotalBal"></span>
-                    </p>
-                    <input type="text" class="BudgetExpenseInput" placeholder="Name" id="budgetExpenseName">
-                    <input type="text" class="BudgetExpenseInput" placeholder="Date" id="budgetExpenseDate">
-                    <input type="text" class="BudgetExpenseInput" placeholder="Amount" id="budgetExpenseAmount">
-                    <button type="submit" class="BudgetExpenseInput" onclick="insertBudgetExpense()">Submit</button>
-                    <button type="submit" class="BudgetExpenseInput" onclick="cancel('BudgetExpenseInput')">Cancel</button>
-                </div>
                 <div id="miscExpense" class="category">
                     <h2>Misc Expenses</h2>
                     <table id="miscExpenseTable">
@@ -110,9 +89,9 @@
                 </div>
             </div>
             <div class="categoryContainer" id="sumContainer">
-                <div id="summary" class="category">
+                <div id="balance" class="category">
                     <h2>Balance</h2>
-                    <table id="summaryTable">
+                    <table id="balanceTable">
                         <tr>
                             <th>Name</th>
                             <th>Amount</th>

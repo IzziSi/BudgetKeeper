@@ -28,8 +28,7 @@ input {
     max-width: 800px;
 }
 
-.catInput, .billInput, .miscExpInput, .addBudgetInput,
- .BudgetExpenseInput {
+.catInput, .billInput, .miscExpInput, .addBudgetInput {
     width: 15%;
     margin: 2px;
     height: 20px;

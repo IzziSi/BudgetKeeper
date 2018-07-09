@@ -1,27 +1,19 @@
 const billsTable = document.getElementById('billsTable');
 const miscExpTable = document.getElementById('miscExpenseTable');
 const budgetTable = document.getElementById('budgetGoalsTable');
+const balanceTable = document.getElementById('balanceTable');
 const addSelect = document.getElementById('addSelect');
-const budgetExpensesTable = document.getElementById('budgetExpensesTable');
-const sum = document.getElementById('summaryTable');
 const misc = document.getElementById('miscExpenseTable');
 const calculateExpenses = document.getElementById('calculateBtn');
 let addSelectOption = addSelect.selectedIndex;
-let billsTitleStored = JSON.parse(localStorage.getItem('billsTitleData'));
-let billsDueStored = JSON.parse(localStorage.getItem('billsDueData'));
-let billsAmountStorage = JSON.parse(localStorage.getItem('billsAmountData'));
-let miscExpTitleStored = JSON.parse(localStorage.getItem('miscExpTitleData'));
-let miscExpDateStored = JSON.parse(localStorage.getItem('miscExpDateData'));
-let miscExpPayStored = JSON.parse(localStorage.getItem('miscExpPayData'));
-let budgetTitleStored = JSON.parse(localStorage.getItem('budgetTitleData'));
-let budgetAmountStored = JSON.parse(localStorage.getItem('budgetAmountData'));
-let budgetExpenseTitleStored = JSON.parse(localStorage.getItem('budgetExpenseTitleData'));
-let budgetExpenseDateStored = JSON.parse(localStorage.getItem('budgetExpenseDateData'));
-let budgetExpenseAmountStored = JSON.parse(localStorage.getItem('budgetExpenseAmountData'));
+let billsStored = JSON.parse(localStorage.getItem('billsData'));
+let miscExpStored = JSON.parse(localStorage.getItem('miscExpData'));
+let budgetStored = JSON.parse(localStorage.getItem('budgetData'));
+let balanceGroup = [];
+let balanceRow = 1;
 let billRow = 1;
 let miscExpRow = 1;
 let budgetRow = 1;
-let budgetExpenseRow = 1;
 let name, date, amount;
 
 
@@ -39,16 +31,6 @@ function cellInput(tableName, nameItem, dateItem, payItem, rowVar) {
     cell3.classList.add(payItem);
 }
 
-function insertBudgetExpense() {
-    name = document.getElementById('budgetExpenseName').value;
-    date = document.getElementById('budgetExpenseDate').value;
-    amount = document.getElementById('budgetExpenseAmount').value;
-    cellInput(budgetExpensesTable, 'budgetExpenseName', 'budgetExpenseDate', 'budgetExpenseAmount', budgetExpenseRow);
-    budgetExpenseRow++;
-    hideInput('budgetExpenseName', 'budgetExpenseDate', 'budgetExpenseAmount', 'BudgetExpenseInput');
-    saveData();
-}
-
 function insertBudget() {
     name = document.getElementById('budgetName').value;
     amount = document.getElementById('budgetAmount').value;
@@ -59,12 +41,33 @@ function insertBudget() {
     cell2.innerHTML = amount;
     cell.classList.add('nameOfBudget');
     cell2.classList.add('budgetAmount');
-    budgetRow++
+    budgetRow++;
     document.getElementById('budgetName').value = '';
     document.getElementById('budgetAmount').value = '';
     cancel('addBudgetInput');
     saveData();
+}
 
+function insertBalance() {
+    let balanceSummary = budgetStored.filter(() => budgetStored);
+
+    for (let i = 0; i < balanceSummary.length; i++) {
+        let filter = billsStored.filter(bill => {
+            console.log(bill.name==balanceSummary[i].name);
+    })}
+    for (let i = 0; i < balanceSummary.length; i++) {
+        name = balanceSummary[i].name;
+        amount = balanceSummary[i].amount;
+        let row = balanceTable.insertRow(balanceRow);
+        var cell = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell.innerHTML = name;
+        cell2.innerHTML = amount;
+        cell.classList.add('nameOfBalance');
+        cell2.classList.add('balanceAmount');
+        budgetRow++;
+
+    }
 }
 
 function insertBill() {
@@ -72,7 +75,7 @@ function insertBill() {
     date = document.getElementById('billDate').value;
     amount = document.getElementById('billAmount').value;
     cellInput(billsTable, 'nameOfBill', 'billDateDue', 'amountToPay', billRow);
-    billRow++
+    billRow++;
     hideInput('billName', 'billDate', 'billAmount', 'billInput');
     saveData();
 }
@@ -82,7 +85,7 @@ function insertMiscExp() {
     date = document.getElementById('miscExpDate').value;
     amount = document.getElementById('miscExpAmount').value;
     cellInput(miscExpTable, 'nameMiscExp', 'dateMiscExp', 'amountMiscExp', miscExpRow);
-    miscExpRow++
+    miscExpRow++;
     hideInput('miscExpName', 'miscExpDate', 'miscExpAmount', 'miscExpInput');
     saveData();
 }
@@ -94,8 +97,6 @@ function selectOptionAdd() {
         showInput('miscExpInput')
     } else if (document.getElementById("addBudget").selected) {
         showInput('addBudgetInput')
-    } else if (document.getElementById("addBudgetExpense").selected) {
-        showInput('BudgetExpenseInput')
     } else {}
 }
 
@@ -141,119 +142,86 @@ function saveData() {
     let billsTitle = document.querySelectorAll('.nameOfBill');
     let billsDue = document.querySelectorAll('.billDateDue');
     let billsPay = document.querySelectorAll('.amountToPay');
-    let billsTitleStorage = [];
-    let billsPayStorage = [];
-    let billsDueStorage = [];
+    let billsStorage = [];
     let miscExpTitle = document.querySelectorAll('.nameMiscExp');
     let miscExpDate = document.querySelectorAll('.dateMiscExp');
     let miscExpPay = document.querySelectorAll('.amountMiscExp');
-    let miscExpTitleStorage = [];
-    let miscExpDateStorage = [];
-    let miscExpPayStorage = [];
+    let miscExpStorage = [];
     let budgetTitle = document.querySelectorAll('.nameOfBudget');
     let budgetAmount = document.querySelectorAll('.budgetAmount');
-    let budgetTitleStorage = [];
-    let budgetAmountStorage = [];
-    let budgetExpenseTitle = document.querySelectorAll('.budgetExpenseName');
-    let budgetExpenseDate = document.querySelectorAll('.budgetExpenseDate');
-    let budgetExpenseAmount = document.querySelectorAll('.budgetExpenseAmount')
-    let budgetExpenseTitleStorage = [];
-    let budgetExpenseDateStorage = [];
-    let budgetExpenseAmountStorage = []; 
+    let budgetStorage = [];
 
-    for (let i = 0;i < budgetExpenseTitle.length;i++) {
-        budgetExpenseTitleStorage.push(budgetExpenseTitle[i].innerText);
-        budgetExpenseDateStorage.push(budgetExpenseDate[i].innerText);
-        budgetExpenseAmountStorage.push(budgetExpenseAmount[i].innerText);
-        console.log('pushed');
-    }
     for (let i = 0; i < budgetTitle.length; i++) {
-        budgetTitleStorage.push(budgetTitle[i].innerText);
-        budgetAmountStorage.push(budgetAmount[i].innerText);
-         
+        budgetStorage.push({
+            name: budgetTitle[i].innerText,
+            amount: budgetAmount[i].innerText
+        });
+
     }
     for (let i = 0; i < billsTitle.length; i++) {
-        billsTitleStorage.push(billsTitle[i].innerText);
-        billsDueStorage.push(billsDue[i].innerText);
-        billsPayStorage.push(billsPay[i].innerText);
+        billsStorage.push({
+            name: billsTitle[i].innerText,
+            date: billsDue[i].innerText,
+            amount: billsPay[i].innerText
+        });
     }
     for (let i = 0; i < miscExpTitle.length; i++) {
-        miscExpTitleStorage.push(miscExpTitle[i].innerText);
-        miscExpDateStorage.push(miscExpDate[i].innerText);
-        miscExpPayStorage.push(miscExpPay[i].innerText);
+        miscExpStorage.push({
+            name: miscExpTitle[i].innerText,
+            date: miscExpDate[i].innerText,
+            amount: miscExpPay[i].innerText
+        });
     }
-    localStorage.setItem("budgetExpenseTitleData", JSON.stringify(budgetExpenseTitleStorage));
-    localStorage.setItem("budgetExpenseDateData", JSON.stringify(budgetExpenseDateStorage));
-    localStorage.setItem("budgetExpenseAmountData", JSON.stringify(budgetExpenseAmountStorage));
-    localStorage.setItem("budgetTitleData", JSON.stringify(budgetTitleStorage));
-    localStorage.setItem("budgetAmountData", JSON.stringify(budgetAmountStorage));
-    localStorage.setItem("billsTitleData", JSON.stringify(billsTitleStorage));
-    localStorage.setItem("billsDueData", JSON.stringify(billsDueStorage));
-    localStorage.setItem("billsAmountData", JSON.stringify(billsPayStorage));
-    localStorage.setItem('miscExpTitleData', JSON.stringify(miscExpTitleStorage));
-    localStorage.setItem('miscExpDateData', JSON.stringify(miscExpDateStorage));
-    localStorage.setItem('miscExpPayData', JSON.stringify(miscExpPayStorage));
+
+    localStorage.setItem("budgetData", JSON.stringify(budgetStorage));
+    localStorage.setItem("billsData", JSON.stringify(billsStorage));
+    localStorage.setItem('miscExpData', JSON.stringify(miscExpStorage));
     billShowTotal();
     miscExpShowTotal();
-    budgetExpenseShowTotal();
     location.reload();
 
 }
 
 function onScreenLoad() {
-    if (budgetTitleStored !== null) {
-        for (let i = 0; i < budgetTitleStored.length; i++) {
+    if (budgetStored !== null) {
+        for (let i = 0; i < budgetStored.length; i++) {
             let row = budgetTable.insertRow(budgetRow);
             let cell = row.insertCell(0);
             let cell2 = row.insertCell(1);
             budgetRow++;
-            cell.innerHTML = budgetTitleStored[i];
-            cell2.innerHTML = budgetAmountStored[i];
+            cell.innerHTML = budgetStored[i].name;
+            cell2.innerHTML = budgetStored[i].amount;
             cell.classList.add('nameOfBudget');
             cell2.classList.add('budgetAmount');
         }
     }
 
-    if (budgetExpenseTitleStored !== null) {
-        for (let i = 0; i < budgetExpenseTitleStored.length;i++) {
-            let row = budgetExpensesTable.insertRow(budgetExpenseRow);
-            let cell = row.insertCell(0);
-            let cell2 = row.insertCell(1);
-            let cell3 = row.insertCell(2);
-            budgetExpenseRow++;
-            cell.innerHTML = budgetExpenseTitleStored[i];
-            cell2.innerHTML = budgetExpenseDateStored[i];
-            cell3.innerHTML = budgetExpenseAmountStored[i];
-            cell.classList.add('budgetExpenseName');
-            cell2.classList.add('budgetExpenseDate');
-            cell3.classList.add('budgetExpenseAmount');
-        }
-    }
-    if (billsTitleStored !== null) {
-        for (let i = 0; i < billsTitleStored.length; i++) {
+    if (billsStored !== null) {
+        for (let i = 0; i < billsStored.length; i++) {
             let row = billsTable.insertRow(billRow);
             let cell = row.insertCell(0);
             let cell2 = row.insertCell(1);
             let cell3 = row.insertCell(2);
             billRow++;
-            cell.innerHTML = billsTitleStored[i];
-            cell2.innerHTML = billsDueStored[i];
-            cell3.innerHTML = billsAmountStorage[i];
+            cell.innerHTML = billsStored[i].name;
+            cell2.innerHTML = billsStored[i].date;
+            cell3.innerHTML = billsStored[i].amount;
             cell.classList.add('nameOfBill');
             cell2.classList.add('billDateDue');
             cell3.classList.add('amountToPay');
         }
     }
-    if (miscExpTitleStored !== null) {
-        for (let i = 0; i < miscExpTitleStored.length; i++) {
+
+    if (miscExpStored !== null) {
+        for (let i = 0; i < miscExpStored.length; i++) {
             let row = miscExpTable.insertRow(miscExpRow);
             let cell = row.insertCell(0);
             let cell2 = row.insertCell(1);
             let cell3 = row.insertCell(2);
             miscExpRow++;
-            cell.innerHTML = miscExpTitleStored[i];
-            cell2.innerHTML = miscExpDateStored[i];
-            cell3.innerHTML = miscExpPayStored[i];
+            cell.innerHTML = miscExpStored[i].name;
+            cell2.innerHTML = miscExpStored[i].date;
+            cell3.innerHTML = miscExpStored[i].amount;
             cell.classList.add('nameMiscExp');
             cell2.classList.add('dateMiscExp');
             cell3.classList.add('amountMiscExp');
@@ -261,23 +229,11 @@ function onScreenLoad() {
     }
 }
 
-function budgetExpenseShowTotal() {
-    if (budgetExpenseTitleStored !== null) {
-        let total = 0;
-        for (let i = 0; i < budgetExpenseTitleStored.length; i++) {
-            tota = total + parseFloat(budgetExpenseTitleStored[i]);
-            document.getElementById('budgetExpTotalBal').innerHTML = total;
-        }
-        document.getElementById('budgetExpTotalBal').innerHTML = total;
-
-    }
-}
-
 function billShowTotal() {
-    if (billsTitleStored !== null) {
+    if (billsStored !== null) {
         let total = 0;
-        for (let i = 0; i < billsAmountStorage.length; i++) {
-            total = total + parseFloat(billsAmountStorage[i]);
+        for (let i = 0; i < billsStored.length; i++) {
+            total = total + parseFloat(billsStored[i].amount);
             document.getElementById('billTotalBal').innerHTML = total;
         }
         document.getElementById('billTotalBal').innerHTML = total;
@@ -285,10 +241,10 @@ function billShowTotal() {
 }
 
 function miscExpShowTotal() {
-    if (miscExpTitleStored !== null) {
+    if (miscExpStored !== null) {
         let total = 0;
-        for (let i = 0; i < miscExpPayStored.length; i++) {
-            total = total + parseFloat(miscExpPayStored[i]);
+        for (let i = 0; i < miscExpStored.length; i++) {
+            total = total + parseFloat(miscExpStored[i].amount);
             document.getElementById('miscExpTotalBal').innerHTML = total;
         }
         document.getElementById('miscExpTotalBal').innerHTML = total;
@@ -299,7 +255,17 @@ function clearData() {
     localStorage.clear();
     location.reload();
 }
-miscExpShowTotal()
+//make array of just category names
+//for each unique push to array
+//google filter(), map, reduce
+//make budget
+//match names to call filter to budget category
+//whatever doesnt get filtered gets pulled to misc cat
+
+
+
+
+miscExpShowTotal();
 billShowTotal();
-budgetExpenseShowTotal();
+miscExpShowTotal();
 onScreenLoad();
