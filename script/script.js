@@ -66,7 +66,7 @@ function insertBalance() {
 
     for (let i = 0; i < balanceSummary.length; i++) {
         let filter = miscExpStored.filter(exp => {
-            return miscExpStored.name == balanceSummary[i].name;
+            return exp.name == balanceSummary[i].name;
         });
         let index = 0;
         filter.forEach(() => {
