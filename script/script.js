@@ -53,8 +53,31 @@ function insertBalance() {
 
     for (let i = 0; i < balanceSummary.length; i++) {
         let filter = billsStored.filter(bill => {
-            console.log(bill.name==balanceSummary[i].name);
-    })}
+            return bill.name == balanceSummary[i].name;
+        });
+        let index = 0;
+        filter.forEach(() => {
+            let balSumAmt = balanceSummary[i].amount
+            let filtAmt = filter[index].amount;
+            balanceSummary[i].amount = balSumAmt - filtAmt; 
+            index++;
+        });
+    }
+
+    for (let i = 0; i < balanceSummary.length; i++) {
+        let filter = miscExpStored.filter(exp => {
+            return miscExpStored.name == balanceSummary[i].name;
+        });
+        let index = 0;
+        filter.forEach(() => {
+            let balSumAmt = balanceSummary[i].amount
+            let filtAmt = filter[index].amount;
+            balanceSummary[i].amount = balSumAmt - filtAmt; 
+            index++;
+            console.log(balanceSummary[i].amount)
+        });
+    }
+
     for (let i = 0; i < balanceSummary.length; i++) {
         name = balanceSummary[i].name;
         amount = balanceSummary[i].amount;
@@ -97,7 +120,7 @@ function selectOptionAdd() {
         showInput('miscExpInput')
     } else if (document.getElementById("addBudget").selected) {
         showInput('addBudgetInput')
-    } else {}
+    } else { }
 }
 
 function showInput(input) {
