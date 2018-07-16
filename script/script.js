@@ -15,6 +15,7 @@ let billRow = 1;
 let miscExpRow = 1;
 let budgetRow = 1;
 let name, date, amount;
+let miscExpListTotal = 0;
 
 
 
@@ -50,6 +51,24 @@ function insertBudget() {
 
 function insertBalance() {
     let balanceSummary = budgetStored.filter(() => budgetStored);
+    let miscExpList = miscExpStored.filter(() => miscExpStored)
+    let checkMisc = balanceSummary.find(element => {
+        return element.name === 'misc'
+    });
+    for (i = 0; i < balanceSummary.length; i++) {
+        for (index = 0; index < miscExpList.length; index++) {
+            if (balanceSummary[i].name === miscExpList[index].name) {
+
+                miscExpList.splice(index, 1);
+            }
+        }
+    }
+    
+    if (checkMisc === undefined) {
+        var misc = {name: 'misc', 
+        amount: 0}
+        balanceSummary.push(misc);
+    }
 
     for (let i = 0; i < balanceSummary.length; i++) {
         let filter = billsStored.filter(bill => {
@@ -59,7 +78,7 @@ function insertBalance() {
         filter.forEach(() => {
             let balSumAmt = balanceSummary[i].amount
             let filtAmt = filter[index].amount;
-            balanceSummary[i].amount = balSumAmt - filtAmt; 
+            balanceSummary[i].amount = balSumAmt - filtAmt;
             index++;
         });
     }
@@ -72,12 +91,19 @@ function insertBalance() {
         filter.forEach(() => {
             let balSumAmt = balanceSummary[i].amount
             let filtAmt = filter[index].amount;
-            balanceSummary[i].amount = balSumAmt - filtAmt; 
+            balanceSummary[i].amount = balSumAmt - filtAmt;
             index++;
-            console.log(balanceSummary[i].amount)
         });
     }
-
+    // make misc work/subtract when it is already created
+    for (i= 0;i < miscExpList.length;i++) {
+        if (misc !== undefined) {
+        miscExpListTotal = miscExpListTotal - miscExpList[i].amount;
+        misc.amount = miscExpListTotal + parseFloat(misc[0].amount);
+    }
+}
+    
+    
     for (let i = 0; i < balanceSummary.length; i++) {
         name = balanceSummary[i].name;
         amount = balanceSummary[i].amount;
@@ -91,8 +117,8 @@ function insertBalance() {
         budgetRow++;
 
     }
-}
 
+}
 function insertBill() {
     name = document.getElementById('billName').value;
     date = document.getElementById('billDate').value;
@@ -120,7 +146,7 @@ function selectOptionAdd() {
         showInput('miscExpInput')
     } else if (document.getElementById("addBudget").selected) {
         showInput('addBudgetInput')
-    } else { }
+    } else {}
 }
 
 function showInput(input) {
