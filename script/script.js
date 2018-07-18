@@ -3,7 +3,6 @@ const miscExpTable = document.getElementById('miscExpenseTable');
 const budgetTable = document.getElementById('budgetGoalsTable');
 const balanceTable = document.getElementById('balanceTable');
 const addSelect = document.getElementById('addSelect');
-const misc = document.getElementById('miscExpenseTable');
 const calculateExpenses = document.getElementById('calculateBtn');
 let addSelectOption = addSelect.selectedIndex;
 let billsStored = JSON.parse(localStorage.getItem('billsData'));
@@ -63,10 +62,12 @@ function insertBalance() {
             }
         }
     }
-    
+
     if (checkMisc === undefined) {
-        var misc = {name: 'misc', 
-        amount: 0}
+        var misc = {
+            name: 'misc',
+            amount: 0
+        }
         balanceSummary.push(misc);
     }
 
@@ -96,14 +97,21 @@ function insertBalance() {
         });
     }
     // make misc work/subtract when it is already created
-    for (i= 0;i < miscExpList.length;i++) {
-        if (misc !== undefined) {
-        miscExpListTotal = miscExpListTotal - miscExpList[i].amount;
-        misc.amount = miscExpListTotal + parseFloat(misc[0].amount);
+    for (i = 0; i < miscExpList.length; i++) {
+            miscExpListTotal = miscExpListTotal - miscExpList[i].amount;
     }
-}
-    
-    
+
+    misc = balanceSummary.find(element => {
+        return element.name === 'misc'
+    });
+
+    if (misc) {
+        misc.amount = parseFloat(misc.amount) + miscExpListTotal;
+    } else {
+        misc.amount = 0 - miscExpListTotal;
+    }
+
+
     for (let i = 0; i < balanceSummary.length; i++) {
         name = balanceSummary[i].name;
         amount = balanceSummary[i].amount;
@@ -146,7 +154,7 @@ function selectOptionAdd() {
         showInput('miscExpInput')
     } else if (document.getElementById("addBudget").selected) {
         showInput('addBudgetInput')
-    } else {}
+    } else { }
 }
 
 function showInput(input) {
@@ -304,15 +312,6 @@ function clearData() {
     localStorage.clear();
     location.reload();
 }
-//make array of just category names
-//for each unique push to array
-//google filter(), map, reduce
-//make budget
-//match names to call filter to budget category
-//whatever doesnt get filtered gets pulled to misc cat
-
-
-
 
 miscExpShowTotal();
 billShowTotal();
