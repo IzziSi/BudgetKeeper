@@ -23,39 +23,35 @@
                     </select>
                     <button type="button" onclick="selectOptionAdd()">Add</button>
                 </form>
-                <form class="delForm">
-                    <select>
-                        <option value="delBills">Bill</option>
-                        <option value="delMiscExp">Misc expense</option>
-                        <option value="delBudget" selected="selected">Budget</option>
-                    </select>
-                    <input type="submit" value="Delete">
-                </form>
+                <button type="button" id="deleteBtn" onclick="deleteBtn()">Delete</button>
                 <button type="button" id="calculateBtn" onclick="insertBalance()">Calculate Expenses</button>
                 <button type="button" id="saveData" onclick="saveData()">Save</button>
                 <button type="button" id="clearData" onclick="clearData()">Clear All</button>
             </div>
             <div id="budget" class="categoryContainer">
-                    <div id="budgetGoals" class="category">
-                            <h2>Budget</h2>
-                            <table id="budgetGoalsTable">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </table>
-                            <input type="text" class="addBudgetInput" placeholder="Name" id = "budgetName">
-                            <input type="text" class="addBudgetInput"  placeholder="Amount" id = "budgetAmount">
-                            <button type="submit" class="addBudgetInput" onclick="insertBudget()">Submit</button>
-                            <button type="submit" class="addBudgetInput" onclick="cancel('addBudgetInput')">Cancel</button>
-                        </div>
+                <div id="budgetGoals" class="category">
+                    <h2>Budget</h2>
+                    <table id="budgetGoalsTable">
+                        <tr>
+                            <th class="tableBlank"></th>
+                            <th class="tableName">Name</th>
+                            <th class="tableDate"></th>
+                            <th class="tableAmount">Amount</th>
+                        </tr>
+                    </table>
+                    <input type="text" class="addBudgetInput" placeholder="Name" id="budgetName">
+                    <input type="text" class="addBudgetInput" placeholder="Amount" id="budgetAmount">
+                    <button type="submit" class="addBudgetInput" onclick="insertBudget()">Submit</button>
+                    <button type="submit" class="addBudgetInput" onclick="cancel('addBudgetInput')">Cancel</button>
+                </div>
                 <div id="bills" class="category">
                     <h2>Bills</h2>
                     <table id="billsTable">
                         <tr>
-                            <th>Name</th>
-                            <th>Due Date</th>
-                            <th>Amount</th>
+                            <th class="tableBlank"></th>
+                            <th class="tableName">Name</th>
+                            <th class="tableDate">Due Date</th>
+                            <th class="tableAmount">Amount</th>
                         </tr>
                     </table>
                     <p>
@@ -72,9 +68,10 @@
                     <h2>Misc Expenses</h2>
                     <table id="miscExpenseTable">
                         <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Amount</th>
+                            <th class="tableBlank"></th>
+                            <th class="tableName">Name</th>
+                            <th class="tableDate">Date</th>
+                            <th class="tableAmount">Amount</th>
                         </tr>
                     </table>
                     <p>
@@ -93,8 +90,8 @@
                     <h2>Balance</h2>
                     <table id="balanceTable">
                         <tr>
-                            <th>Name</th>
-                            <th>Amount left over</th>
+                            <th class="tableName">Name</th>
+                            <th class="tableAmount">Amount left over</th>
                         </tr>
                     </table>
                     <p>

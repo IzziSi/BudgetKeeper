@@ -21,14 +21,21 @@ let miscExpListTotal = 0;
 function cellInput(tableName, nameItem, dateItem, payItem, rowVar) {
     let row = tableName.insertRow(rowVar);
     var cell = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    cell.innerHTML = name;
+    var cell1 = row.insertCell(1);
+    var cell2 = row.insertCell(2);
+    var cell3 = row.insertCell(3);
+    cell.innerHTML = '<input type="checkbox">'
+    cell1.innerHTML = name;
     cell2.innerHTML = date;
     cell3.innerHTML = amount;
-    cell.classList.add(nameItem);
+    cell.style.width = '50px';
+    cell1.classList.add(nameItem);
     cell2.classList.add(dateItem);
     cell3.classList.add(payItem);
+    cell1.style.width = '50%';
+    cell2.style.width = '50%';
+    cell3.style.width = '50%';
+    cell3.style.textAlign = 'right';
 }
 
 function insertBudget() {
@@ -36,11 +43,18 @@ function insertBudget() {
     amount = document.getElementById('budgetAmount').value;
     let row = budgetTable.insertRow(budgetRow);
     var cell = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell.innerHTML = name;
+    var cell1 = row.insertCell(1);
+    var cell2 = row.insertCell(2);
+    cell.innerHTML = '<input type="checkbox">'
+    cell1.innerHTML = name;
     cell2.innerHTML = amount;
-    cell.classList.add('nameOfBudget');
+    cell.style.width = '50px';
+    cell.classList.add('delBtn');
+    cell1.classList.add('nameOfBudget');
     cell2.classList.add('budgetAmount');
+    cell1.style.width = '50%';
+    cell2.style.width = '50%';
+    cell2.style.textAlign = 'right';
     budgetRow++;
     document.getElementById('budgetName').value = '';
     document.getElementById('budgetAmount').value = '';
@@ -96,9 +110,8 @@ function insertBalance() {
             index++;
         });
     }
-    // make misc work/subtract when it is already created
     for (i = 0; i < miscExpList.length; i++) {
-            miscExpListTotal = miscExpListTotal - miscExpList[i].amount;
+        miscExpListTotal = miscExpListTotal - miscExpList[i].amount;
     }
 
     misc = balanceSummary.find(element => {
@@ -127,6 +140,7 @@ function insertBalance() {
     }
 
 }
+
 function insertBill() {
     name = document.getElementById('billName').value;
     date = document.getElementById('billDate').value;
@@ -154,7 +168,33 @@ function selectOptionAdd() {
         showInput('miscExpInput')
     } else if (document.getElementById("addBudget").selected) {
         showInput('addBudgetInput')
-    } else { }
+    } else {}
+}
+//make delete button check for checked checkbox
+//make delete button ask 'are you sure you want to delete?'
+//delete selected checkmarked rows
+
+function deleteBtn() {
+    for (let i = 1; i < billRow; i++) {
+        if (billsTable.rows[i].cells[0].children[0].checked === true) {
+            billsTable.deleteRow(i)
+            billRow--;
+        }
+    }
+
+    for (let index = 1; index < budgetRow; index++) {
+        if (budgetTable.rows[index].cells[0].children[0].checked === true) {
+            budgetTable.deleteRow(index)
+            budgetRow--;
+        }
+    }
+    
+    for (let index = 1; index < miscExpRow; index++) {
+        if (miscExpTable.rows[index].cells[0].children[0].checked === true) {
+            miscExpTable.deleteRow(index)
+            miscExpRow--;
+        }
+    }
 }
 
 function showInput(input) {
@@ -244,12 +284,19 @@ function onScreenLoad() {
         for (let i = 0; i < budgetStored.length; i++) {
             let row = budgetTable.insertRow(budgetRow);
             let cell = row.insertCell(0);
-            let cell2 = row.insertCell(1);
+            let cell1 = row.insertCell(1);
+            let cell2 = row.insertCell(2);
             budgetRow++;
-            cell.innerHTML = budgetStored[i].name;
+            cell.innerHTML = '<input type="checkbox">';
+            cell1.innerHTML = budgetStored[i].name;
             cell2.innerHTML = budgetStored[i].amount;
-            cell.classList.add('nameOfBudget');
+            cell.style.width = '50px';
+            cell1.style.width = '50%';
+            cell2.style.width = '50%';
+            cell2.style.textAlign = 'right';
+            cell1.classList.add('nameOfBudget');
             cell2.classList.add('budgetAmount');
+            cell.classList.add('delBtn');
         }
     }
 
@@ -257,13 +304,21 @@ function onScreenLoad() {
         for (let i = 0; i < billsStored.length; i++) {
             let row = billsTable.insertRow(billRow);
             let cell = row.insertCell(0);
-            let cell2 = row.insertCell(1);
-            let cell3 = row.insertCell(2);
+            let cell1 = row.insertCell(1);
+            let cell2 = row.insertCell(2);
+            let cell3 = row.insertCell(3);
             billRow++;
-            cell.innerHTML = billsStored[i].name;
+            cell1.innerHTML = billsStored[i].name;
             cell2.innerHTML = billsStored[i].date;
             cell3.innerHTML = billsStored[i].amount;
-            cell.classList.add('nameOfBill');
+            cell.innerHTML = '<input type="checkbox">';
+            cell.classList.add('delBtn');
+            cell.style.width = '50px';
+            cell1.style.width = '50%';
+            cell2.style.width = '50%';
+            cell3.style.width = '50%';
+            cell3.style.textAlign = 'right';
+            cell1.classList.add('nameOfBill');
             cell2.classList.add('billDateDue');
             cell3.classList.add('amountToPay');
         }
@@ -273,12 +328,20 @@ function onScreenLoad() {
         for (let i = 0; i < miscExpStored.length; i++) {
             let row = miscExpTable.insertRow(miscExpRow);
             let cell = row.insertCell(0);
-            let cell2 = row.insertCell(1);
-            let cell3 = row.insertCell(2);
+            let cell1 = row.insertCell(1);
+            let cell2 = row.insertCell(2);
+            let cell3 = row.insertCell(3);
             miscExpRow++;
-            cell.innerHTML = miscExpStored[i].name;
+            cell1.innerHTML = miscExpStored[i].name;
             cell2.innerHTML = miscExpStored[i].date;
             cell3.innerHTML = miscExpStored[i].amount;
+            cell.innerHTML = '<input type="checkbox">';
+            cell.style.width = '50px';
+            cell1.style.width = '50%';
+            cell2.style.width = '50%';
+            cell3.style.width = '50%';
+            cell3.style.textAlign = 'right';
+            cell.classList.add('delBtn');
             cell.classList.add('nameMiscExp');
             cell2.classList.add('dateMiscExp');
             cell3.classList.add('amountMiscExp');
@@ -307,6 +370,9 @@ function miscExpShowTotal() {
         document.getElementById('miscExpTotalBal').innerHTML = total;
     }
 }
+
+
+
 
 function clearData() {
     localStorage.clear();

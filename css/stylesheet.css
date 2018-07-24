@@ -3,8 +3,6 @@ body {
     font-family: 'Philosopher', sans-serif;
 }
 
-
-
 #btn {
     display: flex;
     height: 50px;
@@ -28,7 +26,10 @@ input {
     max-width: 800px;
 }
 
-.catInput, .billInput, .miscExpInput, .addBudgetInput {
+.catInput,
+.billInput,
+.miscExpInput,
+.addBudgetInput {
     width: 15%;
     margin: 2px;
     height: 20px;
@@ -39,8 +40,34 @@ input {
 table {
     width: 100%;
 }
+
 tr {
     display: flex;
-    justify-content: space-between;
     max-width: 800px;
+}
+
+.tableBlank {
+    width: 80px;
+}
+
+.tableName, .tableDate {
+    width: 50%;
+    text-align: left;
+}
+
+.tableAmount {
+    width: 50%;
+    text-align: right;
+}
+
+tr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+td > input {
+    width: 70%;
+    margin-left: 10px;
+    padding: 50px;
 }
