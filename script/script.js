@@ -28,10 +28,10 @@ function cellInput(tableName, nameItem, dateItem, payItem, rowVar) {
     cell1.innerHTML = name;
     cell2.innerHTML = date;
     cell3.innerHTML = amount;
-    cell.style.width = '50px';
     cell1.classList.add(nameItem);
     cell2.classList.add(dateItem);
     cell3.classList.add(payItem);
+    cell.style.width = '50px';
     cell1.style.width = '50%';
     cell2.style.width = '50%';
     cell3.style.width = '50%';
@@ -48,12 +48,12 @@ function insertBudget() {
     cell.innerHTML = '<input type="checkbox">'
     cell1.innerHTML = name;
     cell2.innerHTML = amount;
-    cell.style.width = '50px';
     cell.classList.add('delBtn');
     cell1.classList.add('nameOfBudget');
     cell2.classList.add('budgetAmount');
     cell1.style.width = '50%';
     cell2.style.width = '50%';
+    cell.style.width = '50px';
     cell2.style.textAlign = 'right';
     budgetRow++;
     document.getElementById('budgetName').value = '';
@@ -133,6 +133,9 @@ function insertBalance() {
         var cell2 = row.insertCell(1);
         cell.innerHTML = name;
         cell2.innerHTML = amount;
+        cell.style.width = '50%';
+        cell2.style.width = '50%';
+        cell2.style.textAlign = 'right';
         cell.classList.add('nameOfBalance');
         cell2.classList.add('balanceAmount');
         budgetRow++;
@@ -188,7 +191,7 @@ function deleteBtn() {
             budgetRow--;
         }
     }
-    
+
     for (let index = 1; index < miscExpRow; index++) {
         if (miscExpTable.rows[index].cells[0].children[0].checked === true) {
             miscExpTable.deleteRow(index)
@@ -342,7 +345,7 @@ function onScreenLoad() {
             cell3.style.width = '50%';
             cell3.style.textAlign = 'right';
             cell.classList.add('delBtn');
-            cell.classList.add('nameMiscExp');
+            cell1.classList.add('nameMiscExp');
             cell2.classList.add('dateMiscExp');
             cell3.classList.add('amountMiscExp');
         }
@@ -371,6 +374,77 @@ function miscExpShowTotal() {
     }
 }
 
+
+function exportCsv(csv, filename) {
+    let csvFile;
+    let downloadLink;
+    let filetitle = new Date();
+    
+
+    csvFile = new Blob([csv], {type: "text/csv"});
+    downloadLink = document.createElement("a");
+    downloadLink.download = filetitle.getMonth() + '-' + filetitle.getDay() + '-' + filetitle.getFullYear() +'.csv';
+
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+    downloadLink.style.display = "none";
+    
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+}
+
+function exportTableToCsv(html, filename) {
+    var csv = [];
+    var rows = document.querySelectorAll("#budgetGoalsTable tr");
+    csv.push('Budget,,')
+    for (var i = 0; i < rows.length; i++) {
+		var row = [], cols = rows[i].querySelectorAll("td, th");
+		
+        for (var j = 0; j < cols.length; j++) 
+            row.push(cols[j].innerText);
+        
+		csv.push(row.join(","));		
+}
+csv.push('Bills,,')
+var rows = document.querySelectorAll("#billsTable tr");
+for (var i = 0; i < rows.length; i++) {
+    var row = [], cols = rows[i].querySelectorAll("td, th");
+    
+    for (var j = 0; j < cols.length; j++) 
+        row.push(cols[j].innerText);
+    
+    csv.push(row.join(","));		
+}
+
+csv.push('Misc Expenses,,')
+var rows = document.querySelectorAll("#miscExpenseTable tr");
+for (var i = 0; i < rows.length; i++) {
+    var row = [], cols = rows[i].querySelectorAll("td, th");
+    
+    for (var j = 0; j < cols.length; j++) 
+        row.push(cols[j].innerText);
+    
+    csv.push(row.join(","));		
+}
+
+csv.push('Balance,,')
+var rows = document.querySelectorAll("#balanceTable tr");
+for (var i = 0; i < rows.length; i++) {
+    var row = [], cols = rows[i].querySelectorAll("td, th");
+    
+    for (var j = 0; j < cols.length; j++) 
+        row.push(cols[j].innerText);
+    
+    csv.push(row.join(","));		
+}
+
+exportCsv(csv.join("\n"), filename);
+}
+
+document.querySelector(".downloadCSV").addEventListener("click", function () {
+    var html = document.querySelector("main").outerHTML;
+	exportTableToCsv(html, "table.csv");
+});
 
 
 
